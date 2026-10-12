@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECT RAKSHAK AI | Rescue Command Centre</title>
+<style>
+:root{--bg:#07111f;--panel:#101f32;--text:#f3f7ff;--muted:#9db0c9;--blue:#38bdf8;--orange:#ff8a3d;--line:#263c55}
+.light{--bg:#eef4fb;--panel:#fff;--text:#102037;--muted:#53657b;--line:#d5dfeb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif;transition:.25s}
+header{padding:20px 6%;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.brand{font-size:21px;font-weight:900;letter-spacing:1px}.brand span{color:var(--blue)}
+nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 6%;border-bottom:1px solid var(--line)}
+button,a.btn{cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:10px 14px;background:var(--panel);color:var(--text);text-decoration:none;font-weight:bold}
+button:hover,a.btn:hover{border-color:var(--blue)}
+.primary{background:var(--blue);color:#041321;border:0}
+main{max-width:1200px;margin:auto;padding:25px 5%}
+.hero{padding:38px 0 30px}
+.eyebrow{color:var(--orange);font-weight:bold;letter-spacing:2px}
+h1{font-size:clamp(35px,6vw,65px);line-height:1.05;margin:14px 0}
+h1 span{color:var(--blue)}h2{margin-top:0}p{line-height:1.7;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:22px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;min-width:0}
+.stat{font-size:27px;font-weight:bold;color:var(--blue);margin:12px 0}
+section{padding:26px 0;scroll-margin-top:15px}
+label{display:block;margin:12px 0 6px;color:var(--muted)}
+input,textarea,select{width:100%;padding:12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.status{padding:12px;border-radius:9px;background:var(--bg);margin-top:12px;color:var(--blue)}
+.big{font-size:38px;text-align:center;padding:18px}
+footer{padding:25px 6%;border-top:1px solid var(--line);color:var(--muted)}
+.small{font-size:12px;color:var(--muted)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">PROJECT <span>RAKSHAK AI</span></div>
+  <button onclick="toggleTheme()">☀️ / 🌙 Theme</button>
+</header>
+<nav>
+  <button onclick="go('home')">Dashboard</button>
+  <button onclick="go('rover')">Rover Simulator</button>
+  <button onclick="go('mission')">Rescue Mission</button>
+  <button onclick="go('learn')">Learn & Quiz</button>
+  <button onclick="go('about')">About</button>
+  <button onclick="go('contact')">Contact</button>
+  <button onclick="go('account')">Login / Register</button>
+</nav>
+
+<main>
+<section id="home" class="hero">
+  <div class="eyebrow">DISASTER RESPONSE • SCIENCE • INNOVATION</div>
+  <h1>Technology for a<br><span>Safer Tomorrow.</span></h1>
+  <p>PROJECT RAKSHAK AI is a student-led concept for a low-cost disaster-response rescue rover. Our goal is to explore how robotics can support emergency response and the delivery of essential supplies.</p>
+  <div class="actions">
+    <button class="primary" onclick="go('rover')">Explore Rover →</button>
+    <button onclick="go('learn')">Take Project Quiz</button>
+  </div>
+  <div class="grid">
+    <div class="card"><div>🤖</div><h3>Rescue Rover</h3><p>A proposed rover concept for navigating areas where access may be difficult.</p></div>
+    <div class="card"><div>📡</div><h3>Remote Control</h3><p>A website simulator for learning basic rover movement commands.</p></div>
+    <div class="card"><div>🧰</div><h3>Essential Supplies</h3><p>Explore how emergency supplies can be planned and organised.</p></div>
+  </div>
+  <p class="small">DEMO PROJECT: The controls and sample activities on this website are simulations. No physical rover is connected.</p>
+</section>
+
+<section id="rover">
+  <h2>🤖 Rover Control Simulator</h2>
+  <p>Try the simulated movement controls. They do not operate real hardware.</p>
+  <div class="card">
+    <div class="big" id="roverIcon">🤖</div>
+    <div class="grid">
+      <div class="card"><h3>Movement</h3><div class="actions">
+        <button onclick="move('Forward')">⬆ Forward</button>
+        <button onclick="move('Backward')">⬇ Backward</button>
+        <button onclick="move('Left')">⬅ Left</button>
+        <button onclick="move('Right')">➡ Right</button>
+        <button class="primary" onclick="move('Stopped')">■ Stop</button>
+      </div><div class="status" id="moveStatus">Status: Stopped</div></div>
+      <div class="card"><h3>System status</h3><p>Connection: <b>Simulation only</b></p><p>Obstacle sensor: <b>Not connected</b></p><p>Battery: <b>Not measured</b></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="mission">
+  <h2>🧭 Rescue Mission Planner</h2>
+  <div class="grid">
+    <div class="card"><h3>Mission details</h3>
+      <label>Mission name</label><input id="missionName" placeholder="e.g. Supply delivery exercise">
+      <label>Mission area</label><input id="missionArea" placeholder="Enter a fictional training area">
+      <label>Priority</label><select id="priority"><option>Normal</option><option>High</option><option>Urgent</option></select>
+      <div class="actions"><button class="primary" onclick="saveMission()">Save demo mission</button></div>
+      <div id="missionStatus" class="status">No mission saved.</div>
+    </div>
+    <div class="card"><h3>🧰 Supply checklist</h3>
+      <label><input type="checkbox" style="width:auto"> Drinking water</label>
+      <label><input type="checkbox" style="width:auto"> First-aid supplies</label>
+      <label><input type="checkbox" style="width:auto"> Packaged food</label>
+      <label><input type="checkbox" style="width:auto"> Torch and batteries</label>
+      <p class="small">Educational checklist only. Follow official emergency guidance in real situations.</p>
+    </div>
+  </div>
+</section>
+
+<section id="learn">
+  <h2>🧠 Project Quiz</h2>
+  <p>This is a sample educational quiz. Your score is shown on this page; it is not saved to an online account.</p>
+  <div class="card">
+    <form id="quizForm">
+      <p><b>1. What is the main purpose of a rescue rover?</b></p>
+      <label><input type="radio" name="q1" value="0" required style="width:auto"> To play games</label>
+      <label><input type="radio" name="q1" value="1" style="width:auto"> To support tasks in difficult-to-access areas</label>
+      <p><b>2. What should you do before claiming a sensor works?</b></p>
+      <label><input type="radio" name="q2" value="1" required style="width:auto"> Test it and record the results</label>
+      <label><input type="radio" name="q2" value="0" style="width:auto"> Guess its performance</label>
+      <p><b>3. What does this website's rover control do?</b></p>
+      <label><input type="radio" name="q3" value="1" required style="width:auto"> Simulates commands only</label>
+      <label><input type="radio" name="q3" value="0" style="width:auto"> Controls a connected physical rover automatically</label>
+      <div class="actions"><button class="primary" type="submit">Submit quiz</button></div>
+    </form>
+    <div id="quizResult" class="status hidden"></div>
+  </div>
+</section>
+
+<section id="account">
+  <h2>🔐 Participant Registration — Demo</h2>
+  <div class="card">
+    <p>This sample form does not create an account or securely save information. Do not enter real personal information here.</p>
+    <label>Display name</label><input id="demoName" placeholder="Demo participant">
+    <label>Email (optional demo only)</label><input id="demoEmail" type="email" placeholder="example@example.com">
+    <div class="actions"><button onclick="demoRegister()">Preview registration</button></div>
+    <div id="registerStatus" class="status hidden"></div>
+    <p class="small">Real login, protected quiz access, stored results and email delivery require a secure backend and configuration.</p>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About PROJECT RAKSHAK AI</h2>
+  <div class="grid">
+    <div class="card"><h3>Our concept</h3><p>To explore a simple, affordable rescue rover using manual movement control and proposed obstacle detection.</p></div>
+    <div class="card"><h3>Our goals</h3><p>Study robotics, emergency preparedness and the possible transport of essential food and health supplies.</p></div>
+    <div class="card"><h3>Our team</h3><p><b>Team Leader:</b> Ali Azhaan<br><b>Team Partner:</b> Aaron<br><b>School:</b> Sunbeam School, Mau, Uttar Pradesh</p></div>
+  </div>
+  <p>Competition preparation: National Children's Science Congress (NCSC) 2026–27. Theme: Science and Innovation for Sustainability. Sub-theme: Food, Agriculture & Health.</p>
+  <p class="small">Proposed concept, not a claim of completed experiments or verified rescue performance. Update this page only with genuine project results.</p>
+</section>
+
+<section id="contact">
+  <h2>✉️ Contact & Feedback</h2>
+  <div class="card">
+    <label>Your name</label><input id="contactName" placeholder="Name">
+    <label>Message</label><textarea id="contactMessage" rows="4" placeholder="Write your feedback"></textarea>
+    <div class="actions"><button class="primary" onclick="sendFeedback()">Preview message</button></div>
+    <div id="contactStatus" class="status hidden"></div>
+    <p class="small">This demo does not send emails or store messages. Add a secure backend before publishing a real contact form.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <b>PROJECT RAKSHAK AI</b>
+  <p>Student science project • Disaster-response rover concept</p>
+  <p class="small">Educational demonstration only. Not an operational emergency-response system.</p>
+</footer>
+
+<script>
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+function toggleTheme(){document.body.classList.toggle('light');}
+function move(direction){
+ document.getElementById('moveStatus').textContent='Simulation status: '+direction;
+ document.getElementById('roverIcon').textContent=direction==='Stopped'?'🤖':'🤖 ↗';
+}
+function saveMission(){
+ const n=document.getElementById('missionName').value.trim();
+ const a=document.getElementById('missionArea').value.trim();
+ if(!n||!a){document.getElementById('missionStatus').textContent='Please enter a mission name and training area.';return;}
+ document.getElementById('missionStatus').textContent='Demo mission prepared: '+n+' | '+a+' | Priority: '+document.getElementById('priority').value+'. Not sent to a server.';
+}
+document.getElementById('quizForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ const data=new FormData(e.target);let score=0;
+ ['q1','q2','q3'].forEach(q=>score+=Number(data.get(q)||0));
+ const result=document.getElementById('quizResult');
+ result.classList.remove('hidden');
+ result.textContent='Your score: '+score+'/3. '+(score===3?'Excellent work!':'Good try! Review the project and try again.')+' This demo does not issue an official certificate.';
+});
+function demoRegister(){
+ const n=document.getElementById('demoName').value.trim();
+ const box=document.getElementById('registerStatus');box.classList.remove('hidden');
+ box.textContent=n?'Demo preview ready for '+n+'. No account was created.':'Please enter a display name.';
+}
+function sendFeedback(){
+ const n=document.getElementById('contactName').value.trim();
+ const m=document.getElementById('contactMessage').value.trim();
+ const box=document.getElementById('contactStatus');box.classList.remove('hidden');
+ box.textContent=n&&m?'Message preview prepared. It has NOT been sent or stored.':'Please enter your name and message.';
+}
+</script>
+</body>
+</html>
